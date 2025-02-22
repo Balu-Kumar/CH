@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            margin: 20px;
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: white;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none;
+        }
+        .notes-container {
+            margin-top: 20px;
+        }
+        .notes-container input, .notes-container textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .notes-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .note-item {
+            background-color: white;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Homepage</h1>
+    </header>
+    <div class="container">
+        <h2>Topics</h2>
+        <ul>
+            <li>English</li>
+            <li>Aptitude</li>
+            <li>Mathematics</li>
+            <li><a href="#" onclick="toggleCore()">Core</a></li>
+        </ul>
+        <div id="core-subjects" class="hidden">
+            <h2>Core Subjects</h2>
+            <ul>
+                <li onclick="showNotes('Fluid Mechanics')">Fluid Mechanics</li>
+                <li onclick="showNotes('Heat Transfer')">Heat Transfer</li>
+                <li onclick="showNotes('Mass Transfer')">Mass Transfer</li>
+                <li onclick="showNotes('Chemical Reaction Engineering')">Chemical Reaction Engineering</li>
+                <li onclick="showNotes('Process Control')">Process Control</li>
+                <li onclick="showNotes('Chemical Engineering Thermodynamics')">Chemical Engineering Thermodynamics</li>
+                <li onclick="showNotes('Materials Science')">Materials Science</li>
+                <li onclick="showNotes('Chemical Technology')">Chemical Technology</li>
+                <li onclick="showNotes('Plant Design and Economics')">Plant Design and Economics</li>
+                <li onclick="showNotes('Transport Phenomena')">Transport Phenomena</li>
+            </ul>
+        </div>
+        <div id="notes-container" class="notes-container hidden">
+            <h2 id="notes-title"></h2>
+            <input type="date" id="note-date">
+            <textarea id="note-content" rows="4" placeholder="Write your notes here..."></textarea>
+            <button onclick="addNote()">Add Note</button>
+            <ul id="notes-list" class="notes-list"></ul>
+        </div>
+    </div>
+    <script>
+        function toggleCore() {
+            var coreSubjects = document.getElementById('core-subjects');
+            coreSubjects.classList.toggle('hidden');
+        }
+
+        function showNotes(subject) {
+            var notesContainer = document.getElementById('notes-container');
+            var notesTitle = document.getElementById('notes-title');
+            notesContainer.classList.remove('hidden');
+            notesTitle.innerText = subject + ' Notes';
+        }
+
+        function addNote() {
+            var date = document.getElementById('note-date').value;
+            var content = document.getElementById('note-content').value;
+            if (!date || !content) {
+                alert('Please fill out both date and content!');
+                return;
+            }
+
+            var notesList = document.getElementById('notes-list');
+            var noteItem = document.createElement('li');
+            noteItem.className = 'note-item';
+            noteItem.innerHTML = `<strong>${date}:</strong> ${content} <button onclick="deleteNote(this)">Delete</button>`;
+            notesList.appendChild(noteItem);
+            document.getElementById('note-date').value = '';
+            document.getElementById('note-content').value = '';
+        }
+
+        function deleteNote(button) {
+            var noteItem = button.parentElement;
+            noteItem.remove();
+        }
+    </script>
+</body>
+</html>
